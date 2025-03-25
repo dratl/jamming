@@ -5,7 +5,7 @@ function SearchBar() {
   return (
     <div className={styles.SearchBar}>
       <input placeholder="Enter a song, artist, or album" />
-      <button>Search</button>
+      <button className={styles.SearchButton}>Search</button>
     </div>
   );
 }

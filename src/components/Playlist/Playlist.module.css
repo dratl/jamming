@@ -1,0 +1,11 @@
+.Playlist {
+    text-align: left;
+}
+.PlaylistTitle {
+    margin: 24px 0 22px;
+    height: 1.5em;
+}
+.PlaylistSave {
+    width: 100%;
+    margin: 24px 0;
+}

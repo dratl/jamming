@@ -1,0 +1,12 @@
+.Track {
+    display: flex;
+    justify-content: space-between;
+}
+.TrackInformation {
+    text-align: left;
+    max-width: 500px;
+    margin-right: 24px;
+}
+.TrackAction {
+    width: 48px;
+}

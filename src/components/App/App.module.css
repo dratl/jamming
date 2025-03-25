@@ -1,0 +1,29 @@
+.App {
+    text-align: center;
+    background-color: #121212;
+
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+  }
+  
+  .App h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 2.5rem;
+    color: #1DB954; /* Spotify green */
+  }
+  
+  .AppPlaylist {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 1200px;
+    margin-top: 20px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .AppPlaylist {
+      flex-direction: column;
+      align-items: center;
+    }
+  }

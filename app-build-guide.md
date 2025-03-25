@@ -113,7 +113,7 @@ To use the access token you must include the following header in your API calls:
 	
 Header Parameter: Authorization	
 Value: Valid access token following the format: Bearer <Access Token>
-Temporal Acces Token: BQCqTgS8j5fORGQKmwXNpuLt_wXfK2joKRC_ENI3ckS2pf-JFL_cpmrWHmmWQ_cQMtOLeHma4DbfI2mJBIU_KrWim1ZMSq9tyS_5VkxqJMv86kiLKWiLRPoSq9p_hNNq36-vxAxuiZY
+Temporal Acces Token: BQBpeOljlMSxtNLOAbXJ_tV7_V-zUiYUoqf_Fijqlr93xE5dXftX9DQsDWiPa5azyG5F5QOm7Tj5yVL-533PSQpnqgedPrbIk5NfRtwmIKQUTlGut66J3wi0p1AUucesCJ-ZsxF27NE
 
 Example: The following code implements the getProfile() function which performs the API call to the Get Current User's Profile endpoint to retrieve the user profile related information:
 

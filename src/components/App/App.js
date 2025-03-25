@@ -6,11 +6,13 @@ import styles from "./App.module.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.App}>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <SearchBar />
+      <div className={styles.AppPlaylist}>
         <SearchResults />
         <Playlist />
+      </div>
     </div>
   );
 }

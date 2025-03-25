@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './Track.module.css';
 
-function Track() {
+function Track({ track }) {
   return (
     <div className={styles.Track}>
-      <div className={styles.TrackInfo}>
-        <h3>Track Name</h3>
-        <p>Artist | Album</p>
+      <div className={styles.TrackInformation}>
+        <h3>{track.name}</h3>
+        <p>{track.artist} | {track.album}</p>
       </div>
-      <button>+</button>
+      <button className={styles.TrackAction}>+</button>
     </div>
   );
 }
