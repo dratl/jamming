@@ -4,7 +4,7 @@
 }
 .TrackInformation {
     text-align: left;
-    max-width: 500px;
+    width: 400px;
     margin-right: 24px;
 }
 .TrackAction {

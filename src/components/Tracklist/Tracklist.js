@@ -6,7 +6,10 @@ function Tracklist({ tracks }) {
   return (
     <div className={styles.TrackList}>
       {tracks.map((track) => (
-        <Track key={track.id} track={track} /> 
+        <Track 
+          key={track.id} 
+          track={track}
+        /> 
       ))}
     </div>
   );

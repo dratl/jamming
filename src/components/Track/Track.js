@@ -8,7 +8,9 @@ function Track({ track }) {
         <h3>{track.name}</h3>
         <p>{track.artist} | {track.album}</p>
       </div>
-      <button className={styles.TrackAction}>+</button>
+      <button className={styles.TrackAction}>
+        {track.isRemoval ? '-' : '+'}
+      </button>
     </div>
   );
 }
