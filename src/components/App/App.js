@@ -14,22 +14,42 @@ function App() {
     { id: '4', name: 'Don\'t Start Now', artist: 'Dua Lipa', album: 'Future Nostalgia' },
     { id: '5', name: 'Watermelon Sugar', artist: 'The Kid LAROI, Justin Bieber', album: 'Fine Line' },
   ];
-  const mockPlaylistTracks = [
-    { id: '6', name: 'Dynamite', artist: 'BTS', album: 'Dynamite (Single)' },
-    { id: '7', name: 'Stay', artist: 'The Kid LAROI, Justin Bieber', album: 'F*CK LOVE 3: OVER YOU' },
-  ];
   // State for tracks in search results
   const [searchResults, setSearchResults] = useState(mockSearchResults);
   // State for tracks in playlist
-  const [playlistTracks, setPlaylistTracks] = useState(mockPlaylistTracks);
-
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  // State for playlist name
+  const [playlistName, setPlaylistName] = useState('New Playlist');
+  // Add track to playlist
+  const addTrack = (track) => {
+    if (playlistTracks.some(savedTrack => savedTrack.id === track.id)) {
+      return;
+    }
+    setPlaylistTracks(prevTracks => [...prevTracks, track]);
+  };
+  // Remove track from playlist
+  const removeTrack = (track) => {
+    setPlaylistTracks(prevTracks => prevTracks.filter(t => t.id !== track.id));
+  };
+  // Update playlist name
+  const updatePlaylistName = (name) => {
+    setPlaylistName(name);
+  };
   return (
     <div className={styles.App}>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <SearchBar />
       <div className={styles.AppPlaylist}>
-        <SearchResults searchResults={searchResults} />
-        <Playlist playlistTracks={playlistTracks} />
+        <SearchResults
+          searchResults={searchResults}
+          onAdd={addTrack}
+        />
+        <Playlist
+          playlistTracks={playlistTracks}
+          playlistName={playlistName}
+          onRemove={removeTrack}
+          onNameChange={updatePlaylistName}
+        />
       </div>
     </div>
   );

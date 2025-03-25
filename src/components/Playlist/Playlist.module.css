@@ -1,5 +1,6 @@
 .Playlist {
     text-align: left;
+    width: 480px;
 }
 .PlaylistTitle {
     margin: 24px 0 22px;
