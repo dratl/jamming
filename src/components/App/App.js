@@ -12,27 +12,55 @@ function App() {
       id: '1',
       name: 'Blinding Lights',
       artist: 'The Weeknd',
-      album: 'After Hours'
+      album: 'After Hours',
+      uri: 'spotify:track:2S3flt2KfOpG7JNmtteAAZ'
     },
     {
       id: '2',
       name: 'Save Your Tears',
       artist: 'The Weeknd',
-      album: 'After Hours'
+      album: 'After Hours',
+      uri: 'spotify:track:1S0B6NQeoaDO2vh2MEflkp'
     },
     {
       id: '3',
       name: 'Levitating',
       artist: 'Dua Lipa',
-      album: 'Future Nostalgia'
+      album: 'Future Nostalgia',
+      uri: 'spotify:track:6825ujIyyrnHiXOzTVlWFG'
+    },
+    {
+      id: '4',
+      name: 'Don\'t Start Now',
+      artist: 'Dua Lipa',
+      album: 'Future Nostalgia on the Past',
+      uri: 'spotify:track:5pQ0ZiCd26Q9fNw8SCmsFO'
+    },
+    {
+      id: '5',
+      name: 'Watermelon Sugar',
+      artist: 'Harry Styles',
+      album: 'Fine Line',
+      uri: 'spotify:track:6x367ass0NQZOc8j0z0eot'
     }
   ]);
   
   // State for tracks in playlist
-  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [playlistTracks, setPlaylistTracks] = useState([
+    {
+      id: '6',
+      name: 'Dynamite',
+      artist: 'BTS',
+      album: 'Dynamite (Single)',
+      uri: 'spotify:track:7zH7o0YuTjhaFNtaVBj7y2'
+    }
+  ]);
   
   // State for playlist name
   const [playlistName, setPlaylistName] = useState('New Playlist');
+
+  // State for saving playlist to Spotify
+  const [isSaving, setIsSaving] = useState(false);
   
   // Add track to playlist
   const addTrack = (track) => {
@@ -57,7 +85,32 @@ function App() {
   }
   // Update playlist name
   const updatePlaylistName = (name) => {
-    setPlaylistName(name);
+    if (name.trim() !== '') {
+      setPlaylistName(name);
+    }
+  };
+
+  // Save Playlist Functionality
+
+  const savePlaylist = () => {
+    // Check if playlist has tracks and a name
+    if (playlistTracks.length === 0 || !playlistName.trim()) {
+      alert ('Please add tracks to the playlist and give it a name!');
+      return;
+    }
+
+    setIsSaving(true);
+
+    // Simulate API call delay
+    setTimeout(() => {
+      const trackURIs = playlistTracks.map(track => track.uri);
+      console.log('Saving playlist', { name: playlistName, tracks: trackURIs });
+      alert(`Playlist "${playlistName}" saved to your Spotify account!`);
+      // Reset playlist
+      setPlaylistTracks([]);
+      setPlaylistName('New Playlist');
+      setIsSaving(false);
+    }, 1500);
   };
 
   return (
@@ -74,6 +127,7 @@ function App() {
           playlistName={playlistName}
           onRemove={removeTrack}
           onNameChange={updatePlaylistName}
+          onSave={savePlaylist}
         />
       </div>
     </div>

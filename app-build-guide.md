@@ -97,6 +97,14 @@ As a part of this goal, you should access a track property named uri. Spotify us
 
 At this point, you don’t need to interact with the Spotify API quite yet. Use mock data to test your implementation.
 
+Mock Urls:
+https://open.spotify.com/track/2S3flt2KfOpG7JNmtteAAZ?si=c434474129584fa4
+https://open.spotify.com/track/1S0B6NQeoaDO2vh2MEflkp?si=188e2e2cde714aef
+https://open.spotify.com/track/6825ujIyyrnHiXOzTVlWFG?si=8d31e6f11c774cb2
+https://open.spotify.com/track/5pQ0ZiCd26Q9fNw8SCmsFO?si=cc8064a1b08a4639
+https://open.spotify.com/track/6x367ass0NQZOc8j0z0eot?si=8d504e2ada4d46c1
+https://open.spotify.com/track/7zH7o0YuTjhaFNtaVBj7y2?si=fc961db111a34e55
+
 ## Eighth Step: Obtain a Spotify Access Token
 
 Create a JavaScript module that will handle the logic for getting an access token and using it to make requests. The method should have a way to get a user’s access token and store it.
@@ -113,7 +121,7 @@ To use the access token you must include the following header in your API calls:
 	
 Header Parameter: Authorization	
 Value: Valid access token following the format: Bearer <Access Token>
-Temporal Acces Token: BQBpeOljlMSxtNLOAbXJ_tV7_V-zUiYUoqf_Fijqlr93xE5dXftX9DQsDWiPa5azyG5F5QOm7Tj5yVL-533PSQpnqgedPrbIk5NfRtwmIKQUTlGut66J3wi0p1AUucesCJ-ZsxF27NE
+Temporal Acces Token: BQCFA64m8lFI7GOsgdbwfgfqcbkhO7CiN-rl_eAM8UGfYgQeFNXlE_vKZH2VNl_VDoUwReUG1G2dBCFl4SgKYx_PA2tX0IjgWt7IJVRm3KeHi4kTaz2nde3KeZxiItdk28u4Ldzi8-w
 
 Example: The following code implements the getProfile() function which performs the API call to the Get Current User's Profile endpoint to retrieve the user profile related information:
 
