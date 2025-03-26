@@ -4,7 +4,10 @@ import styles from './Tracklist.module.css';
 
 function Tracklist({ tracks, onAdd, onRemove, isRemoval }) {
   return (
-    <div className={styles.TrackList}>
+    <div
+      className={styles.TrackList}
+      data-removal={isRemoval}
+    >
       {tracks.map((track) => (
         <Track 
           key={track.id} 

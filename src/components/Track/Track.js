@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Track.module.css';
 
 function Track({ track, onAdd, onRemove, isRemoval }) {
-  const handleTrackAction = () => {
+  const handleAction = () => {
     isRemoval ? onRemove(track) : onAdd(track);
   };
 
@@ -14,9 +14,10 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
       </div>
       <button
         className={styles.TrackAction}
-        onClick={handleTrackAction}
+        onClick={handleAction}
+        aria-label={isRemoval ? 'Remove from playlist' : 'Add to playlist'}
       >
-        {track.isRemoval ? '-' : '+'}
+        {isRemoval ? '-' : '+'}
       </button>
     </div>
   );

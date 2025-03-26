@@ -6,35 +6,60 @@ import Playlist from "../Playlist/Playlist";
 import styles from "./App.module.css";
 
 function App() {
-  // Mock data for initial state
-  const mockSearchResults = [
-    { id: '1', name: 'Blinding Lights', artist: 'The Weeknd', album: 'After Hours' },
-    { id: '2', name: 'Save Your Tears', artist: 'The Weeknd', album: 'After Hours' },
-    { id: '3', name: 'Levitating', artist: 'Dua Lipa', album: 'Future Nostalgia' },
-    { id: '4', name: 'Don\'t Start Now', artist: 'Dua Lipa', album: 'Future Nostalgia' },
-    { id: '5', name: 'Watermelon Sugar', artist: 'The Kid LAROI, Justin Bieber', album: 'Fine Line' },
-  ];
   // State for tracks in search results
-  const [searchResults, setSearchResults] = useState(mockSearchResults);
+  const [searchResults, setSearchResults] = useState([
+    {
+      id: '1',
+      name: 'Blinding Lights',
+      artist: 'The Weeknd',
+      album: 'After Hours'
+    },
+    {
+      id: '2',
+      name: 'Save Your Tears',
+      artist: 'The Weeknd',
+      album: 'After Hours'
+    },
+    {
+      id: '3',
+      name: 'Levitating',
+      artist: 'Dua Lipa',
+      album: 'Future Nostalgia'
+    }
+  ]);
+  
   // State for tracks in playlist
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  
   // State for playlist name
   const [playlistName, setPlaylistName] = useState('New Playlist');
+  
   // Add track to playlist
   const addTrack = (track) => {
-    if (playlistTracks.some(savedTrack => savedTrack.id === track.id)) {
-      return;
+    // Check if track already exists in playlist
+    const existingTrack = playlistTracks.find(t => t.id === track.id);
+    // If track is not in playlist, add it
+    if (!existingTrack) {
+      setPlaylistTracks([...playlistTracks, track]);
     }
-    setPlaylistTracks(prevTracks => [...prevTracks, track]);
+    // Remove from search results
+    setSearchResults(searchResults.filter(t => t.id !== track.id));
   };
+
   // Remove track from playlist
   const removeTrack = (track) => {
-    setPlaylistTracks(prevTracks => prevTracks.filter(t => t.id !== track.id));
-  };
+    setPlaylistTracks(playlistTracks.filter(t => t.id !== track.id));
+    // Add back to search results if not already there
+    const existingTrack = searchResults.find(t => t.id === track.id);
+    if (!searchResults.some(resultTrack => resultTrack.id === track.id)) {
+      setSearchResults([...searchResults, track]);
+    };
+  }
   // Update playlist name
   const updatePlaylistName = (name) => {
     setPlaylistName(name);
   };
+
   return (
     <div className={styles.App}>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
