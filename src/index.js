@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// ReactDOM.createRoot is used with React 18, imported from 'react-dom/client'.
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './components/App/App';
-import SearchBar from './components/SearchBar/SearchBar';
-import SearchResults from './components/SearchResults/SearchResults';
-import Playlist from './components/Playlist/Playlist';
-import Tracklist from './components/Tracklist/Tracklist';
-import Track from './components/Track/Track';
 import reportWebVitals from './reportWebVitals';
+// Removed unused imports for SearchBar and SearchResults
+// Removed unused imports for SearchResults and Playlist to clean up the code.
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

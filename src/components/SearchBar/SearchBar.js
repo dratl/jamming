@@ -1,12 +1,42 @@
 import React from 'react';
+import React, { useState } from 'react';
+import SpotifyAuth from '../../spotify/SpotifyAuth';
 import styles from './SearchBar.module.css';
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!searchTerm.trim()) return;
+    setIsSearching(true);
+    try {
+      const results = await SpotifyAuth.searchTracks(searchTerm);
+      onSearch(results);
+    } catch (error) {
+      alert('Search failed, please try again.');
+    } finally {
+      setIsSearching(false);
+    }
+  }
+
   return (
-    <div className={styles.SearchBar}>
-      <input placeholder="Enter a song, artist, or album" />
-      <button className={styles.SearchButton}>Search</button>
-    </div>
+    <form>
+      <input
+        type="text"
+        placeholder="Enter a song, artist, or album"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        disabled={isSearching}
+      />
+      <button
+        type="submit"
+        disabled={isSearching || !searchTerm.trim()}
+      >
+        {isSearching ? 'Searching...' : 'Search'}
+      </button>
+    </form>>
   );
 }
 

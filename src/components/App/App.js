@@ -1,11 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import React from "react";
+import SpotifyAuth from "../../spotify/SpotifyAuth";
+import Callback from "../Callback/Callback";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
 import styles from "./App.module.css";
 
 function App() {
+  // State for authentication status and user profile
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+  
+  // Check authentication status on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await SpotifyAuth.getAccessToken();
+        const profile = await SpotifyAuth.getProfile();
+        setUserProfile(profile);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.log('Authentication required');
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // Handle Login
+  const handleLogin = () => {
+    SpotifyAuth.getAccessToken().catch(() => {
+      // Redirect happens automatically
+    });
+  };
+
+  // Handle Logout
+  const handleLogout = () => {
+    SpotifyAuth.clearTokens();
+    setIsAuthenticated(false);
+    setUserProfile(null);
+  };
+
   // State for tracks in search results
   const [searchResults, setSearchResults] = useState([
     {
@@ -92,45 +128,81 @@ function App() {
 
   // Save Playlist Functionality
 
-  const savePlaylist = () => {
-    // Check if playlist has tracks and a name
-    if (playlistTracks.length === 0 || !playlistName.trim()) {
-      alert ('Please add tracks to the playlist and give it a name!');
-      return;
-    }
-
-    setIsSaving(true);
-
-    // Simulate API call delay
-    setTimeout(() => {
-      const trackURIs = playlistTracks.map(track => track.uri);
-      console.log('Saving playlist', { name: playlistName, tracks: trackURIs });
-      alert(`Playlist "${playlistName}" saved to your Spotify account!`);
-      // Reset playlist
-      setPlaylistTracks([]);
+  const savePlaylist = async () => {
+    try {
+      const token = await SpotifyAuth.getAccessToken();
+      const userId = (await SpotifyAuth.getProfile()).id;
+      
+      const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: playlistName,
+          description: 'Created with Jammming',
+          public: false
+        })
+      });
+  
+      const playlist = await response.json();
+      const trackUris = playlistTracks.map(track => track.uri);
+  
+      await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          uris: trackUris
+        })
+      });
+  
+      // Reset after successful save
       setPlaylistName('New Playlist');
-      setIsSaving(false);
-    }, 1500);
+      setPlaylistTracks([]);
+      alert('Playlist saved successfully to Spotify!');
+    } catch (error) {
+      console.error('Failed to save playlist:', error);
+      alert('Failed to save playlist. Please try again.');
+    }
   };
 
   return (
-    <div className={styles.App}>
-      <h1>Ja<span className="highlight">mmm</span>ing</h1>
-        <SearchBar />
-      <div className={styles.AppPlaylist}>
-        <SearchResults
-          searchResults={searchResults}
-          onAdd={addTrack}
-        />
-        <Playlist
-          playlistTracks={playlistTracks}
-          playlistName={playlistName}
-          onRemove={removeTrack}
-          onNameChange={updatePlaylistName}
-          onSave={savePlaylist}
-        />
-      </div>
-    </div>
+    <Routes>
+      <Route path="/callback" element={<Callback />} />
+      <Route path="/" element={
+        <div className={styles.App}>
+          <header>
+            <h1>Ja<span className="highlight">mmm</span>ing</h1>
+            {isAuthenticated ? (
+              <div className="user-info">
+                <span>Welcome, {userProfile?.display_name}</span>
+                <button onClick={handleLogout}>Log Out</button>
+              </div>
+            ) : (
+              <button onClick={handleLogin}>Log in with Spotify</button>
+            )}
+          </header>
+          <SearchBar />
+          <div className={styles.AppPlaylist}>
+            <SearchResults
+              searchResults={searchResults}
+              onAdd={addTrack}
+            />
+            <Playlist
+            playlistTracks={playlistTracks}
+            playlistName={playlistName}
+            onRemove={removeTrack}
+            onNameChange={updatePlaylistName}
+            onSave={savePlaylist}
+            />
+          </div>
+        </div>
+      } />
+    </Routes>
   );
 }
 
