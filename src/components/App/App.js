@@ -178,14 +178,26 @@ function App() {
         <div className={styles.App}>
           <header>
             <h1>Ja<span className="highlight">mmm</span>ing</h1>
-            {isAuthenticated ? (
-              <div className="user-info">
-                <span>Welcome, {userProfile?.display_name}</span>
-                <button onClick={handleLogout}>Log Out</button>
-              </div>
-            ) : (
-              <button onClick={handleLogin}>Log in with Spotify</button>
-            )}
+            <div className={styles.authContainer}>
+              {isAuthenticated ? (
+                <div className={styles.userInfo}>
+                  <span>Welcome, {userProfile?.display_name || 'User'}</span>
+                  <button 
+                    onClick={handleLogout}
+                    className={styles.logoutButton}
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={handleLogin}
+                  className={styles.loginButton}
+                >
+                  Log in with Spotify
+                </button>
+              )}
+            </div>
           </header>
           <SearchBar onSearch={handleSearch} />
           <div className={styles.AppPlaylist}>

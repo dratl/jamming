@@ -1,4 +1,4 @@
-.callback-container {
+.callbackContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,6 +7,6 @@
     color: white;
   }
   
-  .callback-container h2 {
+  .callbackContainer h2 {
     color: #1DB954;
   }

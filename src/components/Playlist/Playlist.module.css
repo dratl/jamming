@@ -8,7 +8,7 @@
   }
   
   .Playlist input {
-    width: 100%;
+    /* width: 100%; Overflow issue */
     padding: 0.8rem;
     font-size: 1.2rem;
     background: transparent;

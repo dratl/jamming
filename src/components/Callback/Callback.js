@@ -21,7 +21,7 @@ function Callback() {
   }, [navigate]);
 
   return (
-    <div className="callback-container">
+    <div className={styles.callbackContainer}>
       <h2>Connecting to Spotify...</h2>
     </div>
   );

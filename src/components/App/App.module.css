@@ -35,3 +35,81 @@
   background-color: rgba(255, 77, 77, 0.1);
   border-radius: 5px;
 }
+
+/* Auth Styles */
+.authContainer {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.authLoading {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userInfo span {
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.loginButton,
+.logoutButton {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginButton {
+  background-color: #1DB954;
+  color: white;
+  border: none;
+}
+
+.loginButton:hover {
+  background-color: #1ed760;
+  transform: scale(1.05);
+}
+
+.logoutButton {
+  background-color: transparent;
+  color: #b3b3b3;
+  border: 1px solid #b3b3b3;
+}
+
+.logoutButton:hover {
+  color: white;
+  border-color: white;
+  transform: scale(1.05);
+}
+
+.highlight {
+  color: #1DB954;
+}
+
+@media only screen and (max-width: 600px) {
+  .authContainer {
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .userInfo {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .loginButton,
+  .logoutButton {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
