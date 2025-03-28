@@ -1,6 +1,6 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import React from "react";
 import SpotifyAuth from "../../spotify/SpotifyAuth";
 import Callback from "../Callback/Callback";
 import SearchBar from "../SearchBar/SearchBar";
@@ -82,42 +82,69 @@ function App() {
 
   const savePlaylist = async () => {
     try {
+      // Validate playlist
+      if (!playlistName.trim() || playlistTracks.length === 0) {
+        alert('Please name your playlist and add tracks before saving!');
+        return;
+      }
+  
+      // Get user ID and access token
       const token = await SpotifyAuth.getAccessToken();
-      const userId = (await SpotifyAuth.getProfile()).id;
-      
-      const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: playlistName,
-          description: 'Created with Jammming',
-          public: false
-        })
-      });
+      const userProfile = await SpotifyAuth.getProfile();
+      const userId = userProfile.id;
   
-      const playlist = await response.json();
+      // Create new playlist
+      const playlistResponse = await fetch(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: playlistName,
+            description: 'Created with Jammming',
+            public: false // Make playlist private
+          })
+        }
+      );
+  
+      if (!playlistResponse.ok) {
+        throw new Error('Failed to create playlist');
+      }
+  
+      const playlist = await playlistResponse.json();
+      const playlistId = playlist.id;
+  
+      // Add tracks to playlist
       const trackUris = playlistTracks.map(track => track.uri);
+      const addTracksResponse = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            uris: trackUris,
+            position: 0
+          })
+        }
+      );
   
-      await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          uris: trackUris
-        })
-      });
+      if (!addTracksResponse.ok) {
+        throw new Error('Failed to add tracks to playlist');
+      }
   
       // Reset after successful save
       setPlaylistName('New Playlist');
       setPlaylistTracks([]);
       alert('Playlist saved successfully to Spotify!');
+  
     } catch (error) {
-      console.error('Failed to save playlist:', error);
+      console.error('Playlist save error:', error);
       alert('Failed to save playlist. Please try again.');
     }
   };

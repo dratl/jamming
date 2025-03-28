@@ -1,48 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tracklist from '../Tracklist/Tracklist';
 import styles from './Playlist.module.css';
 
-function Playlist({ playlistTracks, playlistName, onRemove, onNameChange, onSave, isSaving = false }) {
-  const handleNameChange = (e) => {
-    // Limit to 50 characters
-    const newName = e.target.value.slice(0, 50);
-    onNameChange(newName);
-  }
+function Playlist({ playlistTracks, playlistName, onRemove, onNameChange, onSave }) {
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    // Save playlist to Spotify
-    onSave();
-  }
-
-  const buttonText = isSaving ? 'Saving...' : 'Save to Spotify';
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onSave();
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className={styles.Playlist}>
-      <div className={styles.PlaylistHeader}>
-        <input
-          type="text"
-          className={styles.PlaylistTitle}
-          value={playlistName}
-          onChange={handleNameChange}
-          placeholder="New Playlist"
-          aria-label="Playlist name"
-          maxLength={50}
-        />
-        <span className={styles.CharCount}>
-          {50 - (playlistName?.length || 0)} characters remaining
-        </span>
-      </div>
-      <Tracklist
+      <input
+        value={playlistName}
+        onChange={(e) => onNameChange(e.target.value)}
+        placeholder="New Playlist"
+      />
+      <Tracklist 
         tracks={playlistTracks}
         onRemove={onRemove}
         isRemoval={true}
       />
       <button 
-        className={styles.PlaylistSave}
         onClick={handleSave}
-        disabled={playlistTracks.length === 0 || !playlistName.trim() || isSaving}
+        disabled={isSaving || !playlistName.trim() || playlistTracks.length === 0}
+        className={styles.PlaylistSave}
       >
-        {buttonText}
+        {isSaving ? 'Saving...' : 'SAVE TO SPOTIFY'}
       </button>
     </div>
   );

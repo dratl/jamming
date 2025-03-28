@@ -28,7 +28,7 @@ const SpotifyAuth = {
     }
 
     // No token found - redirect to Spotify auth
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=playlist-modify-public playlist-modify-private`;
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=playlist-modify-private playlist-modify-public`;
     window.location.href = authUrl;
 
     return Promise.reject(new Error('Redirecting to Spotify authentication'));
