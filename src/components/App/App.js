@@ -41,62 +41,14 @@ function App() {
     setIsAuthenticated(false);
     setUserProfile(null);
   };
-
-  // State for tracks in search results
-  const [searchResults, setSearchResults] = useState([
-    {
-      id: '1',
-      name: 'Blinding Lights',
-      artist: 'The Weeknd',
-      album: 'After Hours',
-      uri: 'spotify:track:2S3flt2KfOpG7JNmtteAAZ'
-    },
-    {
-      id: '2',
-      name: 'Save Your Tears',
-      artist: 'The Weeknd',
-      album: 'After Hours',
-      uri: 'spotify:track:1S0B6NQeoaDO2vh2MEflkp'
-    },
-    {
-      id: '3',
-      name: 'Levitating',
-      artist: 'Dua Lipa',
-      album: 'Future Nostalgia',
-      uri: 'spotify:track:6825ujIyyrnHiXOzTVlWFG'
-    },
-    {
-      id: '4',
-      name: 'Don\'t Start Now',
-      artist: 'Dua Lipa',
-      album: 'Future Nostalgia on the Past',
-      uri: 'spotify:track:5pQ0ZiCd26Q9fNw8SCmsFO'
-    },
-    {
-      id: '5',
-      name: 'Watermelon Sugar',
-      artist: 'Harry Styles',
-      album: 'Fine Line',
-      uri: 'spotify:track:6x367ass0NQZOc8j0z0eot'
-    }
-  ]);
-  
-  // State for tracks in playlist
-  const [playlistTracks, setPlaylistTracks] = useState([
-    {
-      id: '6',
-      name: 'Dynamite',
-      artist: 'BTS',
-      album: 'Dynamite (Single)',
-      uri: 'spotify:track:7zH7o0YuTjhaFNtaVBj7y2'
-    }
-  ]);
   
   // State for playlist name
   const [playlistName, setPlaylistName] = useState('New Playlist');
-
   // State for saving playlist to Spotify
-  const [isSaving, setIsSaving] = useState(false);
+  // Removed unused isSaving state
+
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   
   // Add track to playlist
   const addTrack = (track) => {
@@ -170,6 +122,28 @@ function App() {
     }
   };
 
+  // Error Handling and Loading States
+  const [searchError, setSearchError] = useState(null);
+
+  const handleSearch = async (results) => {
+    try {
+      setSearchError(null);
+      const filteredResults = results.filter(
+        track => !playlistTracks.some(playlistTrack => playlistTrack.id === track.id)
+      );
+      setSearchResults(filteredResults);
+    } catch (error) {
+      console.error('Search processing error:', error);
+      setSearchError('Failed to process search results');
+      setSearchResults([]);
+    }
+  };
+  // Render error message if searchError exists
+  {searchError && (
+    <div className={styles.ErrorMessage}>
+      {searchError}
+    </div>
+  )}
   return (
     <Routes>
       <Route path="/callback" element={<Callback />} />
@@ -186,7 +160,7 @@ function App() {
               <button onClick={handleLogin}>Log in with Spotify</button>
             )}
           </header>
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} />
           <div className={styles.AppPlaylist}>
             <SearchResults
               searchResults={searchResults}
