@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SpotifyAuth from '../../spotify/SpotifyAuth';
+import styles from './Callback.module.css';
 
 function Callback() {
   const navigate = useNavigate();

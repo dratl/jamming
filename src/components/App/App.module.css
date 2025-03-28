@@ -1,29 +1,37 @@
 .App {
-    text-align: center;
-    background-color: #121212;
+  text-align: center;
+  background-color: #121212;
+  min-height: 100vh;
+  color: white;
+  padding: 20px;
+}
 
-    min-height: 100vh;
-    color: white;
-    padding: 20px;
-  }
-  
-  .App h1 {
-    margin: 0;
-    padding: 20px 0;
-    font-size: 2.5rem;
-    color: #1DB954; /* Spotify green */
-  }
-  
+.App h1 {
+  margin: 0;
+  padding: 20px 0;
+  font-size: 2.5rem;
+  color: #1DB954; /* Spotify green */
+}
+
+.AppPlaylist {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+@media only screen and (max-width: 768px) {
   .AppPlaylist {
-    display: flex;
-    justify-content: space-evenly;
-    max-width: 1200px;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
   }
+}
 
-  @media only screen and (max-width: 1200px) {
-    .AppPlaylist {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+.ErrorMessage {
+  color: #ff4d4d;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgba(255, 77, 77, 0.1);
+  border-radius: 5px;
+}

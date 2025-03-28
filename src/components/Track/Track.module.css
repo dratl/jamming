@@ -1,12 +1,85 @@
 .Track {
     display: flex;
-    justify-content: space-between;
-}
-.TrackInformation {
+    align-items: center;
+    border-bottom: 1px solid rgba(256, 256, 256, 0.8);
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+  }
+  
+  .Track:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .AlbumCover {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  .TrackInformation {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: left;
-    width: 400px;
-    margin-right: 24px;
-}
-.TrackAction {
-    width: 48px;
-}
+    padding: 0 0.5rem;
+  }
+  
+  .TrackInformation h3 {
+    margin: 0;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .TrackInformation p {
+    margin: 0;
+    color: rgba(256, 256, 256, 0.8);
+    font-size: 0.8rem;
+  }
+  
+  .PreviewPlayer {
+    width: 100%;
+    margin-top: 0.5rem;
+    height: 30px;
+  }
+  
+  .PreviewPlayer::-webkit-media-controls-panel {
+    background-color: rgba(30, 30, 30, 0.8);
+  }
+  
+  .PreviewPlayer::-webkit-media-controls-play-button,
+  .PreviewPlayer::-webkit-media-controls-mute-button {
+    filter: invert(1);
+  }
+  
+  .TrackAction {
+    background-color: transparent;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .TrackAction:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Different color for remove button */
+  [data-removal="true"] .TrackAction:hover {
+    color: #ff4d4d;
+  }
+  
+  /* Different color for add button */
+  [data-removal="false"] .TrackAction:hover {
+    color: #1DB954;
+  }
