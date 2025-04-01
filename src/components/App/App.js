@@ -44,8 +44,8 @@ function App() {
   
   // State for playlist name
   const [playlistName, setPlaylistName] = useState('New Playlist');
-  // State for saving playlist to Spotify
 
+  // State for saving playlist to Spotify
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   
@@ -103,7 +103,7 @@ function App() {
           },
           body: JSON.stringify({
             name: playlistName,
-            description: 'Created with Jammming',
+            description: 'Created with Jammming by Xico',
             public: false // Make playlist private
           })
         }
@@ -152,13 +152,11 @@ function App() {
   const [searchError, setSearchError] = useState(null);
 
   const handleSearch = (results) => {
-    console.log('Processed results from SpotifyAuth:', results); // Debug
     try {
       setSearchError(null);
       const filteredResults = results.filter(
         track => !playlistTracks.some(playlistTrack => playlistTrack.id === track.id)
       );
-      console.log('Filtered results:', filteredResults); // Debug
       setSearchResults(filteredResults);
     } catch (error) {
       console.error('Search processing error:', error);
@@ -181,7 +179,7 @@ function App() {
       <Route path="/" element={
         <div className={styles.App}>
           <header>
-            <h1>Ja<span className="highlight">mmm</span>ing</h1>
+            <h1><span className={styles.highLight}>Jammming</span></h1>
             <div className={styles.authContainer}>
               {isAuthenticated ? (
                 <div className={styles.userInfo}>

@@ -1,20 +1,29 @@
 .Playlist {
-    width: 45%;
-    padding: 1rem;
-    background-color: rgba(30, 30, 30, 0.8);
+    width: 40%;
+    padding: 1rem 2rem 1rem 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .Playlist {
+      margin-top: 40px;
+      width: 72%;
+    }
   }
   
   .Playlist input {
     /* width: 100%; Overflow issue */
     padding: 0.8rem;
     font-size: 1.2rem;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
     background: transparent;
     border: 2px solid #535353;
     border-radius: 5px;
-    color: white;
+    color: #121212;
     text-align: center;
     transition: all 0.3s;
     margin-bottom: 1rem;
@@ -22,15 +31,15 @@
   
   .Playlist input:focus {
     outline: none;
-    border-color: #1DB954;
+    border-color: gold;
     box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.3);
   }
   
   .PlaylistSave {
     margin-top: 1rem;
     padding: 0.8rem 1.5rem;
-    background-color: #1DB954;
-    color: white;
+    background-color: gold;
+    color: #121212;
     border: none;
     border-radius: 25px;
     font-weight: bold;
@@ -43,7 +52,7 @@
   }
   
   .PlaylistSave:hover:not(:disabled) {
-    background-color: #1ed760;
+    background-color: gold;
     transform: scale(1.05);
   }
   

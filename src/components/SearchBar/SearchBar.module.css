@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 0;
+    padding: 3rem 0;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -11,9 +11,9 @@
   .SearchBar input {
     width: 100%;
     padding: 0.8rem;
-    border: 1px solid #535353;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid white;
+    border-radius: 16px;
+    background: #121212;
     color: white;
     font-size: 1rem;
     text-align: center;
@@ -22,17 +22,16 @@
   
   .SearchBar input:focus {
     outline: none;
-    border-color: #1DB954;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.8);
   }
   
   .SearchButton {
     margin-top: 1rem;
     padding: 0.7rem 2rem;
-    background-color: #1DB954;
-    color: white;
+    background-color: gold;
+    color: #121212;
     border: none;
-    border-radius: 25px;
+    border-radius: 16px;
     font-weight: bold;
     font-size: 0.9rem;
     cursor: pointer;
@@ -42,18 +41,20 @@
   }
   
   .SearchButton:hover:not(:disabled) {
-    background-color: #1ed760;
+    background-color: gold;
+    color: #121212;
     transform: scale(1.05);
   }
   
   .SearchButton:disabled {
     background-color: #535353;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.9;
   }
   
   .Error {
     color: #ff4d4d;
+    background-color: white;
     margin-top: 0.5rem;
     font-size: 0.9rem;
     text-align: center;

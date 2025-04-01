@@ -1,7 +1,7 @@
 .Track {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(256, 256, 256, 0.8);
+    border-bottom: 1px solid #121212;
     padding: 0.5rem 0;
     transition: all 0.3s ease;
   }
@@ -21,13 +21,13 @@
   
   .TrackInformation h3 {
     margin: 0;
-    color: white;
+    color: #121212;
     font-size: 1rem;
   }
   
   .TrackInformation p {
     margin: 0;
-    color: rgba(256, 256, 256, 0.8);
+    color: #121212;
     font-size: 0.8rem;
   }
   
@@ -43,7 +43,7 @@
   .TrackAction {
     background-color: transparent;
     border: 0;
-    color: white;
+    color: #121212;
     cursor: pointer;
     font-size: 1.5rem;
     padding: 0.5rem;
