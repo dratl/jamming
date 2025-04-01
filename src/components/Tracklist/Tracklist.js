@@ -4,14 +4,11 @@ import styles from './Tracklist.module.css';
 
 function Tracklist({ tracks, onAdd, onRemove, isRemoval }) {
   return (
-    <div
-      className={styles.TrackList}
-      data-removal={isRemoval}
-    >
+    <div className={styles.TrackList} data-removal={isRemoval}>
       {tracks.map((track) => (
         <Track 
           key={track.id} 
-          track={track}
+          track={track} // Just pass the track as-is
           onAdd={onAdd}
           onRemove={onRemove}
           isRemoval={isRemoval}

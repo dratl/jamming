@@ -1,36 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Track.module.css';
 
 function Track({ track, onAdd, onRemove, isRemoval }) {
-  const handleAction = () => {
-    isRemoval ? onRemove(track) : onAdd(track);
+  // Create a safe track object with all required properties
+  const safeTrack = {
+    ...track,
+    album_cover: track.album_cover || track.album?.images?.[0]?.url || null,
+    preview_url: track.preview_url || null,
+    name: track.name || 'Unknown Track',
+    artist: track.artist || track.artists?.[0]?.name || 'Unknown Artist',
+    album: track.album || track.album?.name || 'Unknown Album'
   };
 
+  // Use safeTrack everywhere in your component
   return (
     <div className={styles.Track}>
-      {track.album_cover && (
-        <img 
-          src={track.album_cover} 
-          alt={`${track.album} cover`} 
-          className={styles.AlbumCover}
-        />
-      )}
+      <div className={styles.AlbumContainer}>
+        {safeTrack.album_cover ? (
+          <img 
+            src={safeTrack.album_cover}
+            alt={`${safeTrack.album} cover`}
+            className={styles.AlbumCover}
+          />
+        ) : (
+          <div className={styles.AlbumPlaceholder}>
+            <span className={styles.MusicIcon}>🎵</span>
+          </div>
+        )}
+      </div>
+
       <div className={styles.TrackInformation}>
-        <h3>{track.name}</h3>
-        <p>
-          {track.artist} • {track.album}
-        </p>
-        {track.preview_url && (
+        <h3>{safeTrack.name}</h3>
+        <p>{safeTrack.artist} • {safeTrack.album}</p>
+        
+        {safeTrack.preview_url && (
           <audio controls className={styles.PreviewPlayer}>
-            <source src={track.preview_url} type="audio/mpeg" />
-            Your browser does not support the audio element.
+            <source src={safeTrack.preview_url} type="audio/mpeg" />
           </audio>
         )}
       </div>
-      <button
-        className={styles.TrackAction} 
-        onClick={handleAction}
-        aria-label={isRemoval ? 'Remove from playlist' : 'Add to playlist'}
+
+      <button 
+        className={styles.TrackAction}
+        onClick={() => isRemoval ? onRemove(safeTrack) : onAdd(safeTrack)}
       >
         {isRemoval ? '−' : '+'}
       </button>

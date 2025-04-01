@@ -45,7 +45,6 @@ function App() {
   // State for playlist name
   const [playlistName, setPlaylistName] = useState('New Playlist');
   // State for saving playlist to Spotify
-  // Removed unused isSaving state
 
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -152,12 +151,14 @@ function App() {
   // Error Handling and Loading States
   const [searchError, setSearchError] = useState(null);
 
-  const handleSearch = async (results) => {
+  const handleSearch = (results) => {
+    console.log('Processed results from SpotifyAuth:', results); // Debug
     try {
       setSearchError(null);
       const filteredResults = results.filter(
         track => !playlistTracks.some(playlistTrack => playlistTrack.id === track.id)
       );
+      console.log('Filtered results:', filteredResults); // Debug
       setSearchResults(filteredResults);
     } catch (error) {
       console.error('Search processing error:', error);
@@ -165,12 +166,15 @@ function App() {
       setSearchResults([]);
     }
   };
+
   // Render error message if searchError exists
   {searchError && (
     <div className={styles.ErrorMessage}>
       {searchError}
     </div>
   )}
+
+
   return (
     <Routes>
       <Route path="/callback" element={<Callback />} />

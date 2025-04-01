@@ -10,14 +10,6 @@
     background-color: rgba(255, 255, 255, 0.1);
   }
   
-  .AlbumCover {
-    width: 50px;
-    height: 50px;
-    margin-right: 1rem;
-    border-radius: 4px;
-    object-fit: cover;
-  }
-  
   .TrackInformation {
     flex-grow: 1;
     display: flex;
@@ -37,12 +29,6 @@
     margin: 0;
     color: rgba(256, 256, 256, 0.8);
     font-size: 0.8rem;
-  }
-  
-  .PreviewPlayer {
-    width: 100%;
-    margin-top: 0.5rem;
-    height: 30px;
   }
   
   .PreviewPlayer::-webkit-media-controls-panel {
@@ -83,3 +69,55 @@
   [data-removal="false"] .TrackAction:hover {
     color: #1DB954;
   }
+
+/* Track.module.css */
+
+/* Album art container */
+.AlbumContainer {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.AlbumCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.AlbumPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #282828;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MusicIcon {
+  font-size: 24px;
+}
+
+/* Preview controls */
+.PreviewToggle {
+  background: transparent;
+  border: none;
+  color: #1DB954;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.PreviewToggle:hover {
+  text-decoration: underline;
+}
+
+.PreviewPlayer {
+  width: 100%;
+  margin-top: 0.5rem;
+  height: 30px;
+}

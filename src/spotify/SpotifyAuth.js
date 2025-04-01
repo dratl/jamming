@@ -137,58 +137,28 @@ const SpotifyAuth = {
       });
   
       if (!response.ok) {
-        console.error('API request failed:', response.status);
-        return [];
+        throw new Error(`Spotify API error: ${response.status}`);
       }
   
       const data = await response.json();
-      console.log('Raw API response:', data); // For debugging
   
-      // Safely extract tracks array
-      const tracks = data?.tracks?.items || [];
-  
-      return tracks.map(track => {
-        // Debug log to inspect track structure
-        console.log('Processing track:', track);
-  
-        // Extract artist name (first artist if available)
-        let artistName = 'Unknown Artist';
-        if (Array.isArray(track.artists)) {
-          const firstArtist = track.artists[0];
-          if (firstArtist && typeof firstArtist.name === 'string') {
-            artistName = firstArtist.name;
-          }
-        }
-  
-        // Extract album info
-        let albumName = 'Unknown Album';
-        let albumImage = null;
-        if (track.album && typeof track.album === 'object') {
-          albumName = track.album.name || 'Unknown Album';
-          if (Array.isArray(track.album.images)) {
-            const firstImage = track.album.images[0];
-            if (firstImage && typeof firstImage.url === 'string') {
-              albumImage = firstImage.url;
-            }
-          }
-        }
-  
-        return {
-          id: track.id || `temp-${Math.random().toString(36).substr(2, 9)}`,
-          name: track.name || 'Untitled Track',
-          artist: artistName,
-          album: albumName,
-          uri: track.uri || '',
-          preview_url: track.preview_url || null,
-          album_cover: albumImage,
-          duration_ms: track.duration_ms || 0
-        };
-      });
+      const processedTracks = (data?.tracks?.items || []).map(track => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists?.[0]?.name || 'Unknown Artist',
+        album: track.album?.name || 'Unknown Album',
+        uri: track.uri,
+        preview_url: track.preview_url || null,
+        album_cover: track.album?.images?.[0]?.url || null, // Ensure this is included
+        duration_ms: track.duration_ms || 0
+      }));
+
+      return processedTracks;
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error('Search error:', error);
       return [];
     }
-  },
+  }
 
 };
 
