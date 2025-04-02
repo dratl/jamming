@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './Track.module.css';
 
 function Track({ track, onAdd, onRemove, isRemoval }) {
+  const [audioError, setAudioError] = useState(false);
   // Create a safe track object with all required properties
   const safeTrack = {
     ...track,
@@ -11,6 +12,13 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
     artist: track.artist || track.artists?.[0]?.name || 'Unknown Artist',
     album: track.album || track.album?.name || 'Unknown Album'
   };
+
+  // Debug preview URL
+  console.log('Track preview URL:', {
+    name: safeTrack.name,
+    preview_url: safeTrack.preview_url,
+    has_preview: !!safeTrack.preview_url
+  });
 
   // Use safeTrack everywhere in your component
   return (
@@ -33,10 +41,19 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
         <h3>{safeTrack.name}</h3>
         <p>{safeTrack.artist} • {safeTrack.album}</p>
         
-        {safeTrack.preview_url && (
-          <audio controls className={styles.PreviewPlayer}>
-            <source src={safeTrack.preview_url} type="audio/mpeg" />
+        {track.preview_url && !audioError ? (
+          <audio
+            controls
+            onError={() => {
+              console.warn('Preview failed to load:', track.preview_url);
+              setAudioError(true);
+            }}
+            onCanPlay={() => setAudioError(false)}
+          >
+            <source src={track.preview_url} type="audio/mpeg" />
           </audio>
+        ) : (
+          <div>No preview available</div>
         )}
       </div>
 

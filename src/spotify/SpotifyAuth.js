@@ -127,6 +127,7 @@ const SpotifyAuth = {
 
   // Search method for tracks
 
+  // In SpotifyAuth.js, modify the searchTracks method:
   async searchTracks(term) {
     try {
       const token = await this.getAccessToken();
@@ -135,23 +136,37 @@ const SpotifyAuth = {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       if (!response.ok) {
         throw new Error(`Spotify API error: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
-      const processedTracks = (data?.tracks?.items || []).map(track => ({
-        id: track.id,
-        name: track.name,
-        artist: track.artists?.[0]?.name || 'Unknown Artist',
-        album: track.album?.name || 'Unknown Album',
-        uri: track.uri,
-        preview_url: track.preview_url || null,
-        album_cover: track.album?.images?.[0]?.url || null, // Ensure this is included
-        duration_ms: track.duration_ms || 0
-      }));
+      console.log('Raw API preview URLs:', 
+        data.tracks.items.map(t => ({
+          name: t.name, 
+          preview_url: t.preview_url,
+          has_preview: !!t.preview_url
+        }))
+      );
+
+      const processedTracks = (data?.tracks?.items || []).map(track => {
+        const processed = {
+          id: track.id,
+          name: track.name,
+          artist: track.artists?.[0]?.name || 'Unknown Artist',
+          album: track.album?.name || 'Unknown Album',
+          uri: track.uri,
+          preview_url: track.preview_url || null, // Explicit null if not available
+          album_cover: track.album?.images?.[0]?.url || null,
+          duration_ms: track.duration_ms || 0
+        };
+        console.log('Processed track preview:', {
+          name: processed.name,
+          preview_url: processed.preview_url
+        });
+        return processed;
+      });
 
       return processedTracks;
     } catch (error) {
