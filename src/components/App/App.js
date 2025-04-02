@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SpotifyAuth from "../../spotify/SpotifyAuth";
 import Callback from "../Callback/Callback";
 import SearchBar from "../SearchBar/SearchBar";
@@ -164,14 +164,6 @@ function App() {
       setSearchResults([]);
     }
   };
-
-  // Render error message if searchError exists
-  {searchError && (
-    <div className={styles.ErrorMessage}>
-      {searchError}
-    </div>
-  )}
-
 
   return (
     <Routes>

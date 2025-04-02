@@ -41,16 +41,16 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
         <h3>{safeTrack.name}</h3>
         <p>{safeTrack.artist} • {safeTrack.album}</p>
         
-        {track.preview_url && !audioError ? (
+        {safeTrack.preview_url && !audioError ? (
           <audio
             controls
             onError={() => {
-              console.warn('Preview failed to load:', track.preview_url);
+              console.warn('Preview failed to load:', safeTrack.preview_url);
               setAudioError(true);
             }}
             onCanPlay={() => setAudioError(false)}
           >
-            <source src={track.preview_url} type="audio/mpeg" />
+            <source src={safeTrack.preview_url} type="audio/mpeg" />
           </audio>
         ) : (
           <div>No preview available</div>

@@ -9,7 +9,7 @@ function SearchBar({ onSearch }) {
 
     const handleSearch = async (e, term) => {
         if (e) e.preventDefault();
-        const searchTerm = term || searchTerm;
+        const currentSearchTerm = term || searchTerm;
         if (!searchTerm.trim()) return;
 
         setIsSearching(true);
@@ -42,16 +42,9 @@ function SearchBar({ onSearch }) {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (!searchTerm.trim()) return;
-
-        try {
-            const results = await SpotifyAuth.searchTracks(searchTerm);
-            onSearch(results); // Pass the processed results directly
-        } catch (error) {
-            console.error('Search failed:', error);
-        }
+        handleSearch(null, searchTerm);
     };
 
     return (
