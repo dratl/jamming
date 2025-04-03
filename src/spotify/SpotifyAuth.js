@@ -1,6 +1,6 @@
 const clientId = '0f955bc81a3f4398a0f3c033480e111f'; // Replace with your actual client ID
 const clientSecret = 'dc76d78044874fa587ca12c95f8866f6'; // Replace with your actual client secret
-const redirectUri = 'https://xico.netlify.app/callback'; // Must match your Spotify app settings
+const redirectUri = 'https://xico.netlify.app/Callback'; // Must match your Spotify app settings
 
 let accessToken = null; // Using let since this will change
 let tokenExpirationTime = null;
