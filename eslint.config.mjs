@@ -1,13 +1,23 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
-import js from "@eslint/js";
-import pluginReact from "eslint-plugin-react";
+import js from '@eslint/js';
+import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
 
-
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,jsx}"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { files: ["**/*.{js,mjs,cjs,jsx}"], languageOptions: { globals: globals.browser } },
-  { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js }, extends: ["js/recommended"] },
-  pluginReact.configs.flat.recommended,
-]);
+export default [
+  js.configs.recommended,
+  reactRecommended,
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off", // Disable for React 17+
+    },
+    languageOptions: {
+      globals: {
+        console: true, // Add this line to recognize 'console' as a global variable
+        fetch: false
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect', // Automatically detect React version
+      },
+    },
+  },
+];

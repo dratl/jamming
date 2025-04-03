@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import SpotifyAuth from '../../spotify/SpotifyAuth';
 import styles from './SearchBar.module.css';
 
@@ -7,9 +8,8 @@ function SearchBar({ onSearch }) {
     const [isSearching, setIsSearching] = useState(false);
     const [error, setError] = useState(null);
 
-    const handleSearch = async (e, term) => {
+    const handleSearch = async (e) => {
         if (e) e.preventDefault();
-        const currentSearchTerm = term || searchTerm;
         if (!searchTerm.trim()) return;
 
         setIsSearching(true);
@@ -69,5 +69,8 @@ function SearchBar({ onSearch }) {
         </div>
     );
 }
+SearchBar.propTypes = {
+    onSearch: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

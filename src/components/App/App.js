@@ -1,3 +1,4 @@
+/* global alert */
 import React from "react";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -65,7 +66,7 @@ function App() {
   const removeTrack = (track) => {
     setPlaylistTracks(playlistTracks.filter(t => t.id !== track.id));
     // Add back to search results if not already there
-    const existingTrack = searchResults.find(t => t.id === track.id);
+
     if (!searchResults.some(resultTrack => resultTrack.id === track.id)) {
       setSearchResults([...searchResults, track]);
     };
@@ -149,18 +150,14 @@ function App() {
   };
 
   // Error Handling and Loading States
-  const [searchError, setSearchError] = useState(null);
-
   const handleSearch = (results) => {
     try {
-      setSearchError(null);
       const filteredResults = results.filter(
         track => !playlistTracks.some(playlistTrack => playlistTrack.id === track.id)
       );
       setSearchResults(filteredResults);
     } catch (error) {
       console.error('Search processing error:', error);
-      setSearchError('Failed to process search results');
       setSearchResults([]);
     }
   };

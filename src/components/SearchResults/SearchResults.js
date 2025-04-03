@@ -1,6 +1,7 @@
 import React from 'react';
 import Tracklist from '../Tracklist/Tracklist';
 import styles from './SearchResults.module.css';
+import PropTypes from 'prop-types';
 
 function SearchResults({ searchResults, onAdd }) {
   return (
@@ -25,5 +26,16 @@ function SearchResults({ searchResults, onAdd }) {
     </div>
   );
 }
+SearchResults.propTypes = {
+  searchResults: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      artist: PropTypes.string.isRequired,
+      album: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onAdd: PropTypes.func.isRequired,
+};
 
 export default SearchResults;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Tracklist from '../Tracklist/Tracklist';
 import styles from './Playlist.module.css';
 
@@ -36,5 +37,12 @@ function Playlist({ playlistTracks, playlistName, onRemove, onNameChange, onSave
     </div>
   );
 }
+Playlist.propTypes = {
+  playlistTracks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  playlistName: PropTypes.string.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onNameChange: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 
 export default Playlist;

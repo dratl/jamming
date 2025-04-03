@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Track from '../Track/Track';
 import styles from './Tracklist.module.css';
 
@@ -17,5 +18,15 @@ function Tracklist({ tracks, onAdd, onRemove, isRemoval }) {
     </div>
   );
 }
+Tracklist.propTypes = {
+  tracks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    })
+  ).isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  isRemoval: PropTypes.bool.isRequired,
+};
 
 export default Tracklist;

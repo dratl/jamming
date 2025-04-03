@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Track.module.css';
 
 function Track({ track, onAdd, onRemove, isRemoval }) {
@@ -66,5 +67,32 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
     </div>
   );
 }
+Track.propTypes = {
+  track: PropTypes.shape({
+    album_cover: PropTypes.string,
+    preview_url: PropTypes.string,
+    name: PropTypes.string,
+    artist: PropTypes.string,
+    album: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        images: PropTypes.arrayOf(
+          PropTypes.shape({
+            url: PropTypes.string
+          })
+        ),
+        name: PropTypes.string
+      })
+    ]),
+    artists: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string
+      })
+    )
+  }).isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  isRemoval: PropTypes.bool.isRequired
+};
 
 export default Track;
