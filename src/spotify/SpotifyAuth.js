@@ -1,6 +1,8 @@
 const clientId = '0f955bc81a3f4398a0f3c033480e111f'; // Replace with your actual client ID
 const clientSecret = 'dc76d78044874fa587ca12c95f8866f6'; // Replace with your actual client secret
-const redirectUri = 'https://xico.netlify.app/callback'; // Must match your Spotify app settings
+const redirectUri = process.env.NODE_ENV === 'development' // Handle both environments, netlify and local
+  ? 'http://localhost:3000/callback' 
+  : 'https://xico.netlify.app/callback';
 
 let accessToken = null; // Using let since this will change
 let tokenExpirationTime = null;
@@ -11,7 +13,7 @@ const SpotifyAuth = {
     if (accessToken && Date.now() < tokenExpirationTime) {
       return Promise.resolve(accessToken);
     }
-
+    
     // Check URL for token after redirect
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
     const newAccessToken = urlParams.get('access_token');
@@ -27,7 +29,7 @@ const SpotifyAuth = {
       return Promise.resolve(accessToken);
     }
 
-    // No token found - redirect to Spotify auth
+    // No token found - redirect to Spotify auth - handle both environments, netlify and local
     const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=playlist-modify-private playlist-modify-public`;
     window.location.href = authUrl;
 

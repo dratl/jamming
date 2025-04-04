@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import SpotifyAuth from "../../spotify/SpotifyAuth";
 import Callback from "../Callback/Callback";
 import SearchBar from "../SearchBar/SearchBar";
@@ -163,8 +163,9 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/callback" element={<Callback />} />
-      <Route path="/" element={
+      <>
+        <Route path="/callback" element={<Callback />} />
+        <Route path="/" element={
         <div className={styles.App}>
           <header>
             <h1><span className={styles.highLight}>Jammming</span></h1>
@@ -204,7 +205,8 @@ function App() {
             />
           </div>
         </div>
-      } />
+        } />
+      </>
     </Routes>
   );
 }
