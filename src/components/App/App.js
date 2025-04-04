@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SpotifyAuth from "../../spotify/SpotifyAuth";
 import Callback from "../Callback/Callback";
 import SearchBar from "../SearchBar/SearchBar";
