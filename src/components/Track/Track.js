@@ -54,7 +54,7 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
             <source src={safeTrack.preview_url} type="audio/mpeg" />
           </audio>
         ) : (
-          <div>No preview available</div>
+          <div className={styles.NoPreview}>No preview available from Spotify</div>
         )}
       </div>
 

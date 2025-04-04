@@ -30,6 +30,11 @@
     color: #121212;
     font-size: 0.8rem;
   }
+
+  .NoPreview {
+    color: #777777;
+    font-size: 0.8rem;
+  }
   
   .PreviewPlayer::-webkit-media-controls-panel {
     background-color: rgba(30, 30, 30, 0.8);
